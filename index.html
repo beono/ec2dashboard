@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EC2 Instances Status</title>
+    <link rel="stylesheet" href="./dashboard.css"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="aws-sdk-2.106.0.min.js"></script>
+    <script src="./dashboard.js"></script>
+    <script type="text/javascript">
+        createEc2dashboard();
+    </script>
+</head>
+<body>
+<div id="ec2dashboard">
+    <div class="updated">
+        Updated at:
+        <span class="date"></span>
+    </div>
+    <div class="instances"></div>
+</div>
+</body>
+</html>

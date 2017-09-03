@@ -1,0 +1,70 @@
+
+:root {
+    --main-cell-size: 120px;
+}
+
+body {
+    font-family: Sans-Serif;
+    background: #202020;
+    color: #fff;
+    padding: 0px;
+    margin: 0px;
+}
+
+a, a:hover, a:active, a:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+.updated {
+    padding: 5px;
+    background: cadetblue;
+    text-align: center;
+}
+
+.instances {
+    width: max-content;
+}
+
+.service {
+    padding: 1em 0;
+    overflow: hidden;
+}
+
+.service div {
+    text-align: center;
+    border-radius: 12px;
+    margin-left: 10px;
+}
+
+.service-name {
+    width: 150px;
+    line-height: var(--main-cell-size);
+    height: var(--main-cell-size);
+    float: left;
+}
+
+.service .instance {
+    width: var(--main-cell-size);
+    height: var(--main-cell-size);
+    float: left;
+}
+
+.service .instance:hover {
+    opacity: 0.9;
+}
+
+.service .instance a {
+    display: block;
+    height: var(--main-cell-size);
+    text-shadow: #999 1px 1px;
+}
+
+.service .instance.ok {
+    background: darkseagreen;
+}
+
+.service .instance.fail {
+    background: indianred;
+    line-height: var(--main-cell-size);
+}
