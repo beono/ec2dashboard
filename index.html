@@ -10,7 +10,15 @@
     <script src="aws-sdk-2.106.0.min.js"></script>
     <script src="./dashboard.js"></script>
     <script type="text/javascript">
-        createEc2dashboard();
+        $(document).ready(function () {
+            createEc2dashboard();
+            window.addEventListener('offline',  function () {
+                $('.updated').append('<b class="nonetwork">No Internet connection</b>');
+            });
+            window.addEventListener('online',  function () {
+                $('.updated .nonetwork').remove();
+            });
+        });
     </script>
 </head>
 <body>

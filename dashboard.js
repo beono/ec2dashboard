@@ -10,7 +10,7 @@ function createEc2dashboard() {
                 var $container = $('#ec2dashboard');
 
                 $('.date', $container).fadeOut(100, function () {
-                    $(this).html((new Date()).toTimeString()).fadeIn(500);
+                    $(this).text((new Date()).toTimeString()).fadeIn(500);
                 });
 
                 $.each(data.Reservations, function (index, value) {
