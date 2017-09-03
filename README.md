@@ -8,18 +8,17 @@ This is how it can look in you browser:
 ## Features
 
 * Using AWS javascript SDK it fetches your EC2 instances every n seconds.
-* Every instances can be clicked it you'll be redirected to the healthcheck page of the specified instance
+* Every instance can be clicked and you'll be redirected to the healthcheck page of the specified instance
 
 ## Requirements
 
-* Browser. Tested with `Chrome Version 60.0.3112.101 (Official Build) (64-bit)`.
-* Configure CORS headers in your apis (for example `Access-Control-Allow-Origin: http://localhost`)
-* Healthcheck endpoint must be located at `/_healthcheck_`
+* Browser. I tested it with `Chrome Version 60.0.3112.101 (Official Build) (64-bit)`.
+* Configure CORS headers in your APIs (for example `Access-Control-Allow-Origin: http://localhost`)
 
 ## Installation
 
 * Clone this repository.
-* Open index.html in your browser and specify your aws credentials, region, healthcheck endpoint and list of instances.
+* Open index.html in your browser and specify your aws credentials, region, healthcheck endpoint and list of your instances.
 
 ```
 For example:
