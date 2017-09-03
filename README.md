@@ -1,6 +1,8 @@
 # ec2dashboard
 Dashboard that shows healthcheck status of your ec2 instances.
 
+![dashboard](./screenshot.png)
+
 ## Features
 
 * Using AWS javascript SDK it fetches your EC2 instances every n seconds.
