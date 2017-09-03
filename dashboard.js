@@ -1,6 +1,16 @@
 function createEc2dashboard() {
 
-    var showInstances = function (ec2, params) {
+    var showInstances = function (ec2, services, hcpath) {
+
+        var params = {
+            Filters: [
+                {
+                    Name: 'tag:Name',
+                    Values: services
+                },
+            ],
+        };
+
         ec2.describeInstances(params, function (err, data) {
             if (err) {
                 console.log(err, err.stack);
@@ -30,7 +40,7 @@ function createEc2dashboard() {
                             '</div>');
                     }
 
-                    var url = 'http://' + instanceIP + '/_healthcheck_';
+                    var url = 'http://' + instanceIP + '/' + hcpath;
 
                     $('#' + instanceName, $container).append('<div id="' + instanceId + '" class="instance"></div>');
                     checkInstance($('#' + instanceId), url);
@@ -68,6 +78,10 @@ function createEc2dashboard() {
         alert('Specify a list of services');
     }
 
+    if (!url.searchParams.get('hcpath')) {
+        alert('Specify healtcheck path');
+    }
+
     var services = [];
     if (url.searchParams.get('q')) {
         services = url.searchParams.get('q').split(',');
@@ -80,17 +94,9 @@ function createEc2dashboard() {
     });
 
     var ec2 = new AWS.EC2({apiVersion: '2016-11-15'});
-    var params = {
-        Filters: [
-            {
-                Name: 'tag:Name',
-                Values: services
-            },
-        ],
-    };
 
-    showInstances(ec2, params);
+    showInstances(ec2, services, url.searchParams.get('hcpath'));
     setInterval(function () {
-        showInstances(ec2, params);
+        showInstances(ec2, services, url.searchParams.get('hcpath'));
     }, 10000);
 }

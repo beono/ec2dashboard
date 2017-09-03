@@ -17,8 +17,8 @@ Dashboard that shows healthcheck status of your ec2 instances.
 ## Installation
 
 * Clone this repository.
-* Open index.html in your browser and specify your aws credentials and list of instances:
+* Open index.html in your browser and specify your aws credentials, region, healthcheck endpoint and list of instances:
 
 ```
-/index.html?accessKeyId=***&secretAccessKey=***&region=eu-west-1&q=users_api,news_api,search_api
+/index.html?accessKeyId=***&secretAccessKey=***&region=eu-west-1&hcpath=healthcheck&q=users_api,news_api,search_api
 ```
