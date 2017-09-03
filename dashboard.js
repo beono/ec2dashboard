@@ -52,7 +52,7 @@ function createEc2dashboard() {
     var checkInstance = function checkInstance($elem, url) {
         $.ajax({
             url: url,
-            timeout: 1000
+            timeout: 5000
         }).done(function (data) {
             $elem.removeClass('fail').addClass('ok').html('<a href="' + url + '">' + data + '</a>');
         }).fail(function (data) {
