@@ -11,7 +11,7 @@ Dashboard that shows healthcheck status of your ec2 instances.
 ## Requirements
 
 * Browser. Tested with `Chrome Version 60.0.3112.101 (Official Build) (64-bit)`.
-* You need to set CORS headers in your apis (`Access-Control-Allow-Origin:*`)
+* Configure CORS headers in your apis (for example `Access-Control-Allow-Origin: http://localhost`)
 * Healthcheck endpoint must be located at `/_healthcheck_`
 
 ## Installation
