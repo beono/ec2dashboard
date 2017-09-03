@@ -1,6 +1,8 @@
 # ec2dashboard
 Dashboard that shows healthcheck status of your ec2 instances.
 
+This is how it can look in you browser:
+
 ![dashboard](./screenshot.png)
 
 ## Features
