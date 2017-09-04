@@ -62,14 +62,6 @@ function createEc2dashboard() {
 
     var url = new URL(document.location.href);
 
-    if (!url.searchParams.get('accessKeyId')) {
-        alert('Specify accessKeyId');
-    }
-
-    if (!url.searchParams.get('secretAccessKey')) {
-        alert('Specify secretAccessKey');
-    }
-
     if (!url.searchParams.get('region')) {
         alert('Specify a region');
     }
@@ -86,17 +78,29 @@ function createEc2dashboard() {
     if (url.searchParams.get('q')) {
         services = url.searchParams.get('q').split(',');
     }
-    
+
+    var accessKeyId = ''
+    while (accessKeyId == '') {
+        accessKeyId = prompt('Please enter AWS accessKeyId', '');
+    }
+
+    var secretAccessKey = ''
+    while (secretAccessKey == '') {
+        secretAccessKey = prompt('Please enter AWS secretAccessKey', '');
+    }
+
     AWS.config = new AWS.Config({
-        accessKeyId: url.searchParams.get('accessKeyId'),
-        secretAccessKey: url.searchParams.get('secretAccessKey'),
+        accessKeyId: accessKeyId,
+        secretAccessKey: secretAccessKey,
         region: url.searchParams.get('region')
     });
 
     var ec2 = new AWS.EC2({apiVersion: '2016-11-15'});
-
+    
     showInstances(ec2, services, url.searchParams.get('hcpath'));
+    
+    var recheckInterval = 10000;
     setInterval(function () {
         showInstances(ec2, services, url.searchParams.get('hcpath'));
-    }, 10000);
+    }, recheckInterval);
 }
