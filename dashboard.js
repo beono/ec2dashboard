@@ -1,4 +1,4 @@
-function createEc2dashboard() {
+function createEc2dashboard(config) {
 
     var showInstances = function (ec2, services, hcpath) {
 
@@ -60,47 +60,44 @@ function createEc2dashboard() {
         });
     }
 
-    var url = new URL(document.location.href);
+    if (!config.accessKeyId) {
+        alert('Specify accessKeyId');
+    }
 
-    if (!url.searchParams.get('region')) {
+    if (!config.region) {
         alert('Specify a region');
     }
 
-    if (!url.searchParams.get('q')) {
+    if (!config.services) {
         alert('Specify a list of services');
     }
 
-    if (!url.searchParams.get('hcpath')) {
+    if (!config.hcpath) {
         alert('Specify healtcheck path');
     }
 
     var services = [];
-    if (url.searchParams.get('q')) {
-        services = url.searchParams.get('q').split(',');
+    if (config.services) {
+        services = config.services.split(',');
     }
 
-    var accessKeyId = ''
-    while (accessKeyId == '') {
-        accessKeyId = prompt('Please enter AWS accessKeyId', '');
-    }
-
-    var secretAccessKey = ''
-    while (secretAccessKey == '') {
-        secretAccessKey = prompt('Please enter AWS secretAccessKey', '');
+    var secretPassPhrase = config.secretAccessKey;
+    if (!secretPassPhrase) {
+        secretPassPhrase = prompt('Enter the AWS secretAccessKey', '');
     }
 
     AWS.config = new AWS.Config({
-        accessKeyId: accessKeyId,
-        secretAccessKey: secretAccessKey,
-        region: url.searchParams.get('region')
+        accessKeyId: config.accessKeyId,
+        secretAccessKey: secretPassPhrase,
+        region: config.region
     });
 
     var ec2 = new AWS.EC2({apiVersion: '2016-11-15'});
-    
-    showInstances(ec2, services, url.searchParams.get('hcpath'));
-    
+
+    showInstances(ec2, services, config.hcpath);
+
     var recheckInterval = 10000;
     setInterval(function () {
-        showInstances(ec2, services, url.searchParams.get('hcpath'));
+        showInstances(ec2, services, config.hcpath);
     }, recheckInterval);
 }

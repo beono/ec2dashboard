@@ -13,14 +13,13 @@ This is how it can look in you browser:
 ## Requirements
 
 * Browser. I tested it with `Chrome Version 60.0.3112.101 (Official Build) (64-bit)`.
-* Configure CORS headers in your APIs (for example `Access-Control-Allow-Origin: http://localhost`)
+* Configure CORS headers in your APIs (for example `Access-Control-Allow-Origin: http://localhost`).
+* Because this is a browser app make sure that this dashboard is in a safe place and can't be accessed by anyone.
+  * If you display the dashboard on a big screen in the office then disable all developer tools in your browser.
 
 ## Installation
 
 * Clone this repository.
-* Open index.html in your browser and specify your aws credentials, region, healthcheck endpoint and list of your instances.
-
-```
-For example:
-/index.html?accessKeyId=***&secretAccessKey=***&region=eu-east-1&hcpath=healthcheck&q=users_api,news_api,search_api
-```
+* Copy `config.dist.js` and rename it to `config.js`
+* Update the values inside of your `config.js`
+* Open `index.html` in your browser

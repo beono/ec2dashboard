@@ -9,9 +9,10 @@
             crossorigin="anonymous"></script>
     <script src="aws-sdk-2.106.0.min.js"></script>
     <script src="./dashboard.js"></script>
+    <script type="text/javascript" src="config.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            createEc2dashboard();
+            createEc2dashboard(ec2dashboardConfig);
             window.addEventListener('offline',  function () {
                 $('.updated').append('<b class="nonetwork">No Internet connection</b>');
             });
