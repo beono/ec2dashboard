@@ -54,7 +54,17 @@ function createEc2dashboard(config) {
             url: url,
             timeout: 5000
         }).done(function (data) {
-            $elem.removeClass('fail').addClass('ok').html('<a href="' + url + '">' + data + '</a>');
+
+            var hcResponse = '';
+            if (typeof data == 'object') {
+                $.each(data, function( key, value ) {
+                    hcResponse += key + ': ' + value + '<br/>';
+                });
+            } else {
+                hcResponse = data;
+            }
+
+            $elem.removeClass('fail').addClass('ok').html('<a href="' + url + '">' + hcResponse + '</a>');
         }).fail(function (data) {
             $elem.removeClass('ok').addClass('fail').html('<a href="' + url + '">fail</a>');
         });

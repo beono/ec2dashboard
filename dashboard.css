@@ -1,4 +1,3 @@
-
 :root {
     --main-cell-size: 120px;
 }
@@ -39,19 +38,25 @@ a, a:hover, a:active, a:visited {
     text-align: center;
     border-radius: 12px;
     margin-left: 10px;
+    box-sizing: border-box;
 }
 
 .service-name {
     width: 150px;
-    line-height: var(--main-cell-size);
     height: var(--main-cell-size);
     float: left;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    word-break: break-word;
 }
 
 .service .instance {
     width: var(--main-cell-size);
     height: var(--main-cell-size);
     float: left;
+    overflow: hidden;
+    padding: 5px;
 }
 
 .service .instance:hover {
@@ -60,8 +65,12 @@ a, a:hover, a:active, a:visited {
 
 .service .instance a {
     display: block;
-    height: var(--main-cell-size);
     text-shadow: #999 1px 1px;
+    height: var(--main-cell-size);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
 }
 
 .service .instance.ok {
@@ -70,5 +79,4 @@ a, a:hover, a:active, a:visited {
 
 .service .instance.fail {
     background: indianred;
-    line-height: var(--main-cell-size);
 }
