@@ -23,27 +23,34 @@ function createEc2dashboard(config) {
                     $(this).text((new Date()).toTimeString()).fadeIn(500);
                 });
 
-                $.each(data.Reservations, function (index, value) {
+                $.each(data.Reservations, function (index, reservation) {
+                    $.each(reservation.Instances, function (index, instance) {
 
-                    var instanceId = value.Instances[0].InstanceId;
-                    var instanceName = instanceId;
-                    var instanceIP = value.Instances[0].PrivateIpAddress
+                        var instanceId = instance.InstanceId;
+                        var instanceName = instanceId;
+                        var instanceIP = instance.PrivateIpAddress
 
-                    if (typeof value.Instances[0].Tags[0] != "undefined") {
-                        instanceName = value.Instances[0].Tags[0].Value
-                    }
+                        if (typeof instance.Tags[0] != "undefined") {
+                            instanceName = instance.Tags[0].Value;
+                            for (i in instance.Tags) {
+                                if (instance.Tags[i].Key == 'Name') {
+                                    instanceName = instance.Tags[i].Value
+                                }
+                            }
+                        }
 
-                    if ($('#' + instanceName, $container).length === 0) {
-                        $('.instances', $container).append(
-                            '<div id="' + instanceName + '" class="service">' +
-                            '<div class="service-name">' + instanceName + '</div>' +
-                            '</div>');
-                    }
+                        if ($('#' + instanceName, $container).length === 0) {
+                            $('.instances', $container).append(
+                                '<div id="' + instanceName + '" class="service">' +
+                                '<div class="service-name">' + instanceName + '</div>' +
+                                '</div>');
+                        }
+                        
+                        var url = 'http://' + instanceIP + '/' + hcpath;
 
-                    var url = 'http://' + instanceIP + '/' + hcpath;
-
-                    $('#' + instanceName, $container).append('<div id="' + instanceId + '" class="instance"></div>');
-                    checkInstance($('#' + instanceId), url);
+                        $('#' + instanceName, $container).append('<div id="' + instanceId + '" class="instance"></div>');
+                        checkInstance($('#' + instanceId), url);
+                    });
                 });
             }
         });
