@@ -25,53 +25,72 @@ function createEc2dashboard(config) {
 
                 $.each(data.Reservations, function (index, reservation) {
                     $.each(reservation.Instances, function (index, instance) {
-
-                        var instanceId = instance.InstanceId;
-                        var instanceName = instanceId;
-                        var instanceIP = instance.PrivateIpAddress
-
-                        if (typeof instance.Tags[0] != "undefined") {
-                            instanceName = instance.Tags[0].Value;
-                            for (i in instance.Tags) {
-                                if (instance.Tags[i].Key == 'Name') {
-                                    instanceName = instance.Tags[i].Value
-                                }
-                            }
-                        }
-
-                        if ($('#' + instanceName, $container).length === 0) {
-                            $('.instances', $container).append(
-                                '<div id="' + instanceName + '" class="service">' +
-                                '<div class="service-name">' + instanceName + '</div>' +
-                                '</div>');
-                        }
-                        
-                        var url = 'http://' + instanceIP + '/' + hcpath;
-
-                        $('#' + instanceName, $container).append('<div id="' + instanceId + '" class="instance"></div>');
-                        checkInstance($('#' + instanceId), url);
+                        renderInstnaceView(instance, $container, hcpath);
                     });
                 });
             }
         });
     }
 
+    var renderInstnaceView = function (instance, $container, hcpath) {
+        var instanceId = instance.InstanceId;
+        var instanceName = instanceId;
+        var instanceIP = instance.PrivateIpAddress
+
+        if (typeof instance.Tags[0] != "undefined") {
+            instanceName = instance.Tags[0].Value;
+            for (var i in instance.Tags) {
+                if (instance.Tags[i].Key == 'Name') {
+                    instanceName = instance.Tags[i].Value
+                }
+            }
+        }
+
+        if ($('#' + instanceName, $container).length === 0) {
+            $('.instances', $container).append(
+                '<div id="' + instanceName + '" class="service">' +
+                '<div class="service-name">' + instanceName + '</div>' +
+                '</div>');
+        }
+
+        if ($('#' + instanceId, $container).length === 0) {
+            $('#' + instanceName, $container).append('<div id="' + instanceId + '" class="instance"></div>');
+        }
+
+        var url = 'http://' + instanceIP + '/' + hcpath;
+        checkInstance($('#' + instanceId), url);
+    }
+
     var checkInstance = function checkInstance($elem, url) {
+        $elem.removeClass('blink');
         $.ajax({
             url: url,
             timeout: 5000
         }).done(function (data) {
 
+            var revision = '';
+
             var hcResponse = '';
             if (typeof data == 'object') {
-                $.each(data, function( key, value ) {
+                $.each(data, function (key, value) {
+                    if (key == 'revision') {
+                        revision = value;
+                    }
                     hcResponse += key + ': ' + value + '<br/>';
                 });
             } else {
                 hcResponse = data;
             }
 
-            $elem.removeClass('fail').addClass('ok').html('<a href="' + url + '">' + hcResponse + '</a>');
+            if (revision) {
+                $elem.css('border-bottom', '12px solid #' + revision.substr(0, 6));
+            }
+
+            if ($elem.data('hash') != undefined && $elem.data('hash') != window.btoa(hcResponse)) {
+                $elem.addClass('blink');
+            }
+
+            $elem.removeClass('fail').addClass('ok').data('hash', window.btoa(hcResponse)).html('<a href="' + url + '">' + hcResponse + '</a>');
         }).fail(function (data) {
             $elem.removeClass('ok').addClass('fail').html('<a href="' + url + '">fail</a>');
         });
