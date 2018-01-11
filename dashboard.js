@@ -37,6 +37,10 @@ function createEc2dashboard(config) {
         var instanceName = instanceId;
         var instanceIP = instance.PrivateIpAddress
 
+        if (typeof instanceIP == "undefined") {
+          return;
+        }
+
         if (typeof instance.Tags[0] != "undefined") {
             instanceName = instance.Tags[0].Value;
             for (var i in instance.Tags) {
@@ -90,9 +94,9 @@ function createEc2dashboard(config) {
                 $elem.addClass('blink');
             }
 
-            $elem.removeClass('fail').addClass('ok').data('hash', window.btoa(hcResponse)).html('<a href="' + url + '">' + hcResponse + '</a>');
+            $elem.removeClass('fail').addClass('ok').data('hash', window.btoa(hcResponse)).html('<a href="' + url + '" target="_blank">' + hcResponse + '</a>');
         }).fail(function (data) {
-            $elem.removeClass('ok').addClass('fail').html('<a href="' + url + '">fail</a>');
+            $elem.removeClass('ok').addClass('fail').html('<a href="' + url + '" target="_blank">fail</a>');
         });
     }
 
